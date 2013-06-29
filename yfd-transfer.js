@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-var fileName = './events.txt';
+var fileName = process.argv[2];
 
 fs.exists(fileName, function(exists) {
   if (!exists) {
