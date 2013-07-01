@@ -5,7 +5,7 @@ var fs = require('fs');
 var fileName = process.argv[2];
 var actions = [];
 
-var readActionsLog = function() {
+var readActionsFile = function() {
   if (!fileName) {
     console.error('Specify YFD actions log file (you can download it on http://your.flowingdata.com/actions/log/)');
   } else {
@@ -17,7 +17,7 @@ var readActionsLog = function() {
           if (err) {
             console.error(err);
           } else {
-            console.log(data.toString());
+            parseActions(data.toString());
           }
         });
       }
@@ -25,4 +25,12 @@ var readActionsLog = function() {
   }
 };
 
-readActionsLog();
+var parseActions = function(data) {
+  actions = data.split('\n').map(function(row) {
+    return row.split('\t');
+  });
+  actions.shift();
+  console.log(actions[3]);
+};
+
+readActionsFile();
