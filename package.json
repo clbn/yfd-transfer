@@ -1,0 +1,10 @@
+{
+  "name": "yfd-transfer",
+  "version": "0.0.1",
+  "author": {
+    "name": "Alex Olshansky",
+    "email": "i@creagenics.com",
+    "url": "http://creagenics.com/"
+  },
+  "description": "YFD Transfer"
+}
