@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
 var fs = require('fs');
-
+var mysql = require('mysql');
 var fileName = process.argv[2];
 var actions = [];
+var db;
 
 var readActionsFile = function() {
   if (!fileName) {
@@ -29,8 +30,41 @@ var parseActions = function(data) {
   actions = data.split('\n').map(function(row) {
     return row.split('\t');
   });
-  actions.shift();
-  console.log(actions[3]);
+  actions.shift(); // remove header row
+  importActions(actions);
+};
+
+var importActions = function(actions) {
+  checkDatabase();
+  saveActions(actions);
+};
+
+var checkDatabase = function() {
+  db = mysql.createConnection({
+    host: '127.0.0.1',
+    user: 'root',
+    password: 'ToPsEcReT',
+    database: 'yfd'
+  });
+  db.query(
+    'CREATE TABLE IF NOT EXISTS yfd_actions (' +
+      'id INT(11) unsigned NOT NULL AUTO_INCREMENT,' +
+      'action_name VARCHAR(255) DEFAULT NULL,' +
+      'action_value VARCHAR(255) DEFAULT NULL,' +
+      'action_unit VARCHAR(255) DEFAULT NULL,' +
+      'action_time VARCHAR(255) DEFAULT NULL,' +
+      'tags VARCHAR(255) DEFAULT NULL,' +
+      'PRIMARY KEY (id)) DEFAULT CHARSET=utf8',
+    function(err) {
+      if (err) {
+        throw err;
+      }
+      console.log('DB table checked.');
+    }
+  );
+};
+
+var saveActions = function(actions) {
 };
 
 readActionsFile();

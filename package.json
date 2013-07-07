@@ -6,5 +6,8 @@
     "email": "i@creagenics.com",
     "url": "http://creagenics.com/"
   },
-  "description": "YFD Transfer"
+  "description": "YFD Transfer",
+  "dependencies": {
+    "mysql": "0.9.6"
+  }
 }
