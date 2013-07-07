@@ -18,6 +18,7 @@ var readActionsFile = function() {
           if (err) {
             console.error(err);
           } else {
+            console.log('Actions file read.');
             parseActions(data.toString());
           }
         });
@@ -31,6 +32,7 @@ var parseActions = function(data) {
     return row.split('\t');
   });
   actions.shift(); // remove header row
+  console.log('Actions file parsed.');
   importActions(actions);
 };
 
