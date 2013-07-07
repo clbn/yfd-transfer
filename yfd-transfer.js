@@ -48,23 +48,35 @@ var checkDatabase = function() {
   });
   db.query(
     'CREATE TABLE IF NOT EXISTS yfd_actions (' +
-      'id INT(11) unsigned NOT NULL AUTO_INCREMENT,' +
-      'action_name VARCHAR(255) DEFAULT NULL,' +
-      'action_value VARCHAR(255) DEFAULT NULL,' +
-      'action_unit VARCHAR(255) DEFAULT NULL,' +
-      'action_time VARCHAR(255) DEFAULT NULL,' +
-      'tags VARCHAR(255) DEFAULT NULL,' +
+      'id INT(11) unsigned NOT NULL AUTO_INCREMENT, ' +
+      'action_name VARCHAR(255) DEFAULT NULL, ' +
+      'action_value VARCHAR(255) DEFAULT NULL, ' +
+      'action_unit VARCHAR(255) DEFAULT NULL, ' +
+      'action_time VARCHAR(255) DEFAULT NULL, ' +
+      'tags VARCHAR(255) DEFAULT NULL, ' +
       'PRIMARY KEY (id)) DEFAULT CHARSET=utf8',
     function(err) {
       if (err) {
         throw err;
       }
-      console.log('DB table checked.');
+      console.log('DB table checked/created.');
     }
   );
 };
 
 var saveActions = function(actions) {
+  actions.forEach(function(action) {
+    db.query(
+      'INSERT INTO yfd_actions (action_name, action_value, action_unit, action_time, tags) VALUES (?, ?, ?, ?, ?)',
+      [action[0], action[1], action[2], action[3], action[4]],
+      function(err) {
+        if (err) {
+          throw err;
+        }
+        console.log('Action imported.');
+      }
+    );
+  });
 };
 
 readActionsFile();
