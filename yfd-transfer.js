@@ -79,6 +79,7 @@ var saveActions = function(actions) {
       }
     );
   });
+  console.log('Import completed.');
 };
 
 readActionsFile();
