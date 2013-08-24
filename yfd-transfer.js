@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 
 var fs = require('fs');
+var path = require('path');
 var mysql = require('mysql');
+
+var config = require(path.join(__dirname, 'config.js'));
 var fileName = process.argv[2];
 var actions = [];
 var db;
@@ -43,10 +46,10 @@ var importActions = function(actions) {
 
 var checkDatabase = function() {
   db = mysql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    password: 'ToPsEcReT',
-    database: 'yfd'
+    host: config.host,
+    user: config.user,
+    password: config.password,
+    database: config.database
   });
   db.query(
     'CREATE TABLE IF NOT EXISTS yfd_actions (' +
