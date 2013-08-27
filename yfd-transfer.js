@@ -4,7 +4,13 @@ var fs = require('fs');
 var path = require('path');
 var mysql = require('mysql');
 
-var config = require(path.join(__dirname, 'config.js'));
+if (fs.existsSync(path.join(__dirname, 'config.js'))) {
+  var config = require(path.join(__dirname, 'config.js'));
+} else {
+  console.error('Configuration file is missing. Copy config.js.default to config.js and customize it.');
+  process.exit(1);
+}
+
 var fileName = process.argv[2];
 var actions = [];
 var db;
