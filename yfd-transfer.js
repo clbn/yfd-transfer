@@ -21,7 +21,7 @@ var readActionsFile = function() {
   } else {
     fs.exists(fileName, function(exists) {
       if (!exists) {
-        console.error('File not found');
+        console.error('File \'' + fileName + '\' not found');
       } else {
         fs.readFile(fileName, function(err, data) {
           if (err) {
