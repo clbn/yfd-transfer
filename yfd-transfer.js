@@ -27,7 +27,7 @@ var readActionsFile = function() {
           if (err) {
             console.error(err);
           } else {
-            console.log('Actions file read');
+            console.log('Actions file read.');
             parseActions(data.toString());
           }
         });
@@ -41,22 +41,28 @@ var parseActions = function(data) {
     return row.split('\t');
   });
   actions.shift(); // remove header row
-  console.log('Actions file parsed');
-  importActions(actions);
+  console.log('Actions parsed.');
+  checkDatabase(actions);
 };
 
-var importActions = function(actions) {
-  checkDatabase();
-  saveActions(actions);
-};
-
-var checkDatabase = function() {
+var checkDatabase = function(actions) {
   db = mysql.createConnection({
     host: config.host,
     user: config.user,
     password: config.password,
     database: config.database
   });
+
+  db.connect(function(err) {
+    if (err) {
+      console.error('Can\'t connect to database. Here is the details:');
+      console.error(err);
+      process.exit(1);
+    } else {
+      console.log('Database connection established.');
+    }
+  });
+
   db.query(
     'CREATE TABLE IF NOT EXISTS yfd_actions (' +
       'id INT(11) unsigned NOT NULL AUTO_INCREMENT, ' +
@@ -71,6 +77,7 @@ var checkDatabase = function() {
         throw err;
       }
       console.log('DB table checked/created.');
+      saveActions(actions);
     }
   );
 };
@@ -88,7 +95,7 @@ var saveActions = function(actions) {
       }
     );
   });
-  console.log('Import completed.');
+  console.log('Import completed');
 };
 
 readActionsFile();
