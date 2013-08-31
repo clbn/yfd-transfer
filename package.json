@@ -8,6 +8,6 @@
   },
   "description": "YFD Transfer",
   "dependencies": {
-    "mysql": "0.9.6"
+    "mysql": "2.0.0-alpha9"
   }
 }
