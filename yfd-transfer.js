@@ -25,7 +25,9 @@ var readActionsFile = function() {
       } else {
         fs.readFile(fileName, function(err, data) {
           if (err) {
+            console.error('Can\'t read actions file. Here is the details:');
             console.error(err);
+            process.exit(1);
           } else {
             console.log('Actions file read.');
             parseActions(data.toString());
